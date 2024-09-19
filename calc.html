@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calc.css" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="messageDisplayContainer">
+        <input
+          id="messageDisplay"
+          type="text"
+          value="Calculator - Made By Yali 😜"
+          disabled
+        />
+      </div>
+
+      <div id="historyContainer">
+        <textarea id="historyDisplay" disabled>0</textarea>
+      </div>
+
+      <div id="displayContainer">
+        <input id="display" type="text" value="0" disabled />
+      </div>
+
+      <div id="calcButtonContainer">
+        <div>
+          <button class="calcButton resetButton" onclick="resetCalculator()">
+            C
+          </button>
+          <button class="calcButton deleteButton" onclick="removeChar()">
+            DEL
+          </button>
+          <button class="calcButton operateButton" onclick="operate()">
+            =
+          </button>
+          <button
+            class="calcButton operatorButton"
+            onclick="calculatePercentage()"
+          >
+            %
+          </button>
+        </div>
+
+        <div>
+          <button class="calcButton digitButton" onclick="appendChar('1')">
+            1
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('2')">
+            2
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('3')">
+            3
+          </button>
+          <button
+            class="calcButton operatorButton"
+            onclick="appendOperator('+')"
+          >
+            +
+          </button>
+        </div>
+
+        <div>
+          <button class="calcButton digitButton" onclick="appendChar('4')">
+            4
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('5')">
+            5
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('6')">
+            6
+          </button>
+          <button
+            class="calcButton operatorButton"
+            onclick="appendOperator('-')"
+          >
+            −
+          </button>
+        </div>
+
+        <div>
+          <button class="calcButton digitButton" onclick="appendChar('7')">
+            7
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('8')">
+            8
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('9')">
+            9
+          </button>
+          <button
+            class="calcButton operatorButton"
+            onclick="appendOperator('×')"
+          >
+            ×
+          </button>
+        </div>
+
+        <div>
+          <button
+            class="calcButton digitButton"
+            id="decimal"
+            onclick="appendChar('.')"
+          >
+            .
+          </button>
+          <button class="calcButton digitButton" onclick="appendChar('0')">
+            0
+          </button>
+          <button class="calcButton digitButton" onclick="changeSign()">
+            +/-
+          </button>
+          <button
+            class="calcButton operatorButton"
+            onclick="appendOperator('÷')"
+          >
+            ÷
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="calc.js"></script>
+  </body>
+</html>
