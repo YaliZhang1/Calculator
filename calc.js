@@ -1,19 +1,18 @@
-// 定义一些全局变量，用于存储计算过程中的数据
-let firstNumber = "0"; // 第一个运算数
-let secondNumber = ""; // 第二个运算数
-let operator = ""; // 当前操作符
-let resetDisplay = false; // 是否重置显示器的标志
-let history = "0"; // 记录历史操作
-const display = document.querySelector("#display"); // 显示屏
-const historyDisplay = document.querySelector("#historyDisplay"); // 显示历史记录
-const messageDisplay = document.querySelector("#messageDisplay"); // 显示消息
-const decimalButton = document.querySelector("#decimal"); // 小数点按钮
+let firstNumber = "0";
+let secondNumber = "";
+let operator = "";
+let resetDisplay = false;
+let history = "0";
+const display = document.querySelector("#display");
+const historyDisplay = document.querySelector("#historyDisplay");
+const messageDisplay = document.querySelector("#messageDisplay");
+const decimalButton = document.querySelector("#decimal");
 
 // 添加键盘事件监听器
 document.addEventListener("keydown", function (event) {
   const key = event.key;
   if (key >= "0" && key <= "9") {
-    appendChar(key); // 数字键调用appendChar函数
+    appendChar(key); //
   } else if (
     key === "." ||
     (event.code === "NumpadDecimal" && !decimalButton.disabled)
@@ -36,15 +35,14 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
-// 添加字符到显示屏函数
 function appendChar(char) {
   // 清空错误信息显示
   initialMessageDisplay();
 
   // 如果需要重置显示器或者当前值为“0”且输入字符不是“.”，则清空显示屏
   if (resetDisplay || (display.value === "0" && char !== ".")) {
-    display.value = ""; // 重置显示屏
-    resetDisplay = false; //重置显示器的标志
+    display.value = "";
+    resetDisplay = false;
   }
 
   if (display.value === "" && char === ".") {
@@ -52,11 +50,11 @@ function appendChar(char) {
   }
 
   if (display.value.length === 28) {
-    showErrorMessage("Error: max input length reached"); // 显示错误信息
-    return; // 如果显示屏字符长度为28，直接返回
+    showErrorMessage("Error: max input length reached");
+    return;
   }
   if (firstNumber.includes("e")) {
-    showErrorMessage("Error: scientific notation is not editable"); // 显示错误信息
+    showErrorMessage("Error: scientific notation is not editable");
     return; // 科学计数法后面不能直接添加数字，直接返回
   }
   display.value += char; // 将当前输入字符添加到显示屏
@@ -126,7 +124,7 @@ function removeChar() {
     decimalButton.disabled = false;
   }
 
-  updateLastLineInHistoryDisplay(); // 更新历史记录显示
+  updateLastLineInHistoryDisplay();
 }
 
 // 处理操作符输入的函数
@@ -148,7 +146,6 @@ function appendOperator(op) {
   firstNumber = replaceOccurrenceInLastLine(firstNumber); // 替换最后一行中的原始值为新值
   display.value = firstNumber; // 更新显示屏
 
-  // 如果当前有操作符并且有第二个运算数，进行计算
   if (operator && secondNumber !== "") {
     operate();
   }
@@ -167,7 +164,6 @@ function appendOperator(op) {
   historyDisplay.scrollTop = historyDisplay.scrollHeight; // 历史记录显示器自动滚动到底部
 }
 
-// 处理百分比的函数
 function calculatePercentage() {
   // 清空信息显示
   initialMessageDisplay();
@@ -185,10 +181,10 @@ function calculatePercentage() {
     return; // 如果没有第二个运算数并且有操作符，直接返回
   }
 
-  let percentageResult = 0; // 初始化计算结果
+  let percentageResult = 0;
   if (secondNumber === "") {
     const a = parseFloat(firstNumber);
-    percentageResult = a / 100; // 计算百分比
+    percentageResult = a / 100;
     display.value = percentageResult; // 显示结果
   } else {
     if (operator === "×" || operator === "÷") {
@@ -204,14 +200,14 @@ function calculatePercentage() {
     percentageResult = calcPercentage(a, b, operator); // 计算百分比
   }
 
-  history += ` % = ${percentageResult}\n\n${percentageResult}`; // 添加计算结果到历史记录
-  historyDisplay.value = history; // 更新历史记录显示
+  history += ` % = ${percentageResult}\n\n${percentageResult}`;
+  historyDisplay.value = history;
   historyDisplay.scrollTop = historyDisplay.scrollHeight; // 历史记录显示器自动滚动到底部
 
   firstNumber = percentageResult.toString(); // 更新第一个运算数（结果）
-  secondNumber = ""; // 重置第二个运算数
-  operator = ""; // 重置操作符
-  display.value = percentageResult.toString(); // 显示计算结果
+  secondNumber = ""; // 重置
+  operator = ""; // 重置
+  display.value = percentageResult.toString();
 
   // 处理小数点按钮
   if (percentageResult.toString().includes(".")) {
@@ -223,7 +219,6 @@ function calculatePercentage() {
 
 // 处理+/-的函数, 改变当前值的正负
 function changeSign() {
-  // 清空信息显示
   initialMessageDisplay();
 
   if (
@@ -232,7 +227,7 @@ function changeSign() {
     display.value === "Infinity" ||
     display.value === "-Infinity"
   )
-    return; // 如果显示屏为“0”,“ERROR”, “Infinity”或者为“-Infinity”，直接返回
+    return;
   if (operator && secondNumber !== "" && display.value !== "0") {
     secondNumber = (parseFloat(secondNumber) * -1).toString();
     display.value = secondNumber;
@@ -246,7 +241,6 @@ function changeSign() {
   updateLastLineInHistoryDisplay(); // 更新历史记录显示
 }
 
-// 重置计算器的函数
 function resetCalculator() {
   // 清空信息显示
   initialMessageDisplay();
@@ -266,37 +260,30 @@ function initialMessageDisplay() {
   messageDisplay.value = "Calculator - Made By Yali 😜"; // 清空信息显示
 }
 
-// 显示错误信息的函数
 function showErrorMessage(message) {
-  messageDisplay.style.color = "red"; // 设置消息显示的颜色为红色
+  messageDisplay.style.color = "red";
   messageDisplay.value = message; // 显示错误信息
 }
 
-// 基本运算函数
-// 加法
 function add(a, b) {
   return a + b;
 }
 
-// 减法
 function subtract(a, b) {
   return a - b;
 }
 
-// 乘法
 function multiply(a, b) {
   return a * b;
 }
 
-// 除法
 function divide(a, b) {
   if (b === 0) {
-    return "ERROR"; // 除以零时返回错误
+    return "ERROR";
   }
   return a / b;
 }
 
-// 百分比
 function calcPercentage(a, b, operator) {
   switch (operator) {
     case "+":
@@ -309,11 +296,7 @@ function calcPercentage(a, b, operator) {
 // 格式化数字
 function formatNumber(num) {
   let parsed = parseFloat(num); // 将字符串转换为浮点数同时会去掉比如：1.2300000后面的0，会返回1.23
-  if (Number.isInteger(parsed)) {
-    return parsed.toString(); // 返回整数的字符串
-  } else {
-    return parsed.toString(); // 返回浮点数的字符串
-  }
+  return parsed.toString();
 }
 
 // 执行计算的函数
@@ -321,15 +304,13 @@ function operate() {
   // 清空错误信息显示
   initialMessageDisplay();
 
-  // 如果没有操作符，直接返回
   if (!operator) {
-    showErrorMessage("Error: no operator dectected"); // 显示错误信息
+    showErrorMessage("Error: no operator dectected");
     return;
   }
 
-  // 如果没有第二个运算数，直接返回
   if (secondNumber === "") {
-    showErrorMessage("Error: no second number dectected"); // 显示错误信息
+    showErrorMessage("Error: no second number dectected");
     return;
   }
 
@@ -346,49 +327,47 @@ function operate() {
   const b = parseFloat(secondNumber);
   var result = "0"; // 初始化计算结果
 
-  // 根据操作符执行相应的计算
   switch (operator) {
     case "+":
-      result = add(a, b); // 执行加法
+      result = add(a, b);
       break;
     case "-":
-      result = subtract(a, b); // 执行减法
+      result = subtract(a, b);
       break;
     case "×":
-      result = multiply(a, b); // 执行乘法
+      result = multiply(a, b);
       break;
     case "÷":
-      result = divide(a, b); // 执行除法
+      result = divide(a, b);
       break;
   }
 
   // 如果出现错误或者结果为无穷大，则重置显示器
   if (result === "ERROR" || result === Infinity || result === -Infinity) {
     if (result === "ERROR") {
-      showErrorMessage("Error: division by zero"); // 显示错误信息
+      showErrorMessage("Error: division by zero");
     }
     resetDisplay = true;
     firstNumber = "0";
   } else {
-    firstNumber = result.toString(); // 将计算结果存储为第一个运算数
+    firstNumber = result.toString();
   }
 
-  // 更新历史记录，添加计算结果
   history += ` = ${result}\n\n`; // 添加计算结果到历史记录，每次计算结果后换行
 
   // 更新第一个运算数（结果）到历史记录
   if (result === "ERROR" || result === Infinity || result === -Infinity) {
     history += "0"; // 如果出现错误或者结果为无穷大，添加“0”到历史记录
   } else {
-    history += `${result}`; // 否则，添加计算结果到历史记录
+    history += `${result}`;
   }
 
   historyDisplay.value = history;
   historyDisplay.scrollTop = historyDisplay.scrollHeight; // 历史记录显示器自动滚动到底部
 
-  secondNumber = ""; // 重置第二个运算数
-  operator = ""; // 重置操作符
-  display.value = result.toString(); // 显示计算结果
+  secondNumber = "";
+  operator = "";
+  display.value = result.toString();
 
   // 处理小数点按钮， 如果结果包含小数点，禁用小数点按钮
   if (result.toString().includes(".")) {
@@ -416,7 +395,7 @@ function updateLastLineInHistoryDisplay() {
   lines[lines.length - 1] = lastLine; // 更新历史记录的最后一行
   history = lines.join("\n"); // 重新组合历史记录，用换行符连接
   historyDisplay.value = history; // 更新历史记录显示
-  historyDisplay.scrollTop = historyDisplay.scrollHeight; // 历史记录显示器自动滚动到底部
+  historyDisplay.scrollTop = historyDisplay.scrollHeight;
 }
 
 // 替换最后一行中的原始值为新值
@@ -445,7 +424,7 @@ function replaceOccurrenceInLastLine(originalValue) {
       lines[lines.length - 1] = updatedLastLine;
       history = lines.join("\n"); // 重新组合历史记录
       historyDisplay.value = history; // 更新历史记录显示
-      historyDisplay.scrollTop = historyDisplay.scrollHeight; // 历史记录显示器自动滚动到底部
+      historyDisplay.scrollTop = historyDisplay.scrollHeight;
     }
   }
 
@@ -454,7 +433,7 @@ function replaceOccurrenceInLastLine(originalValue) {
 
 // 删除科学计数法中的字符
 function deleteCharInScientificNotation(numberStr) {
-  let number = parseFloat(numberStr); // 将字符串转换为浮点数
+  let number = parseFloat(numberStr);
   if (number.toString().includes("e")) {
     // 如果浮点数包含“e”
     let [base, exponent] = number.toExponential().split("e"); // 将浮点数转换为科学计数法
