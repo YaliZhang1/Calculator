@@ -8,7 +8,6 @@ const historyDisplay = document.querySelector("#historyDisplay");
 const messageDisplay = document.querySelector("#messageDisplay");
 const decimalButton = document.querySelector("#decimal");
 
-// 添加键盘事件监听器
 document.addEventListener("keydown", function (event) {
   const key = event.key;
   if (key >= "0" && key <= "9") {
@@ -19,19 +18,19 @@ document.addEventListener("keydown", function (event) {
   ) {
     appendChar("."); // 小数点或数字键盘的小数点调用appendChar函数
   } else if (key === "Backspace") {
-    removeChar(); // 退格键调用removeChar函数
+    removeChar(); //
   } else if (key === "+" || key === "-" || key === "*" || key === "/") {
     const opMap = { "+": "+", "-": "-", "*": "×", "/": "÷" };
-    appendOperator(opMap[key]); // 运算符键调用appendOperator函数
+    appendOperator(opMap[key]);
   } else if (key === "Enter") {
     event.preventDefault(); // 阻止默认行为
-    operate(); // 回车键调用operate函数
+    operate();
   } else if (key.toLowerCase() === "c") {
-    resetCalculator(); // C键调用resetCalculator函数
+    resetCalculator();
   } else if (key === "%") {
-    calculatePercentage(); // 百分号键调用calculatePercentage函数
+    calculatePercentage();
   } else if (key === "s") {
-    changeSign(); // S键调用changeSign函数
+    changeSign();
   }
 });
 
@@ -177,8 +176,8 @@ function calculatePercentage() {
   }
 
   if (secondNumber === "" && operator !== "") {
-    showErrorMessage("Error: no second number dectected"); // 显示错误信息
-    return; // 如果没有第二个运算数并且有操作符，直接返回
+    showErrorMessage("Error: no second number dectected");
+    return; // 如果有操作符但是没有第二个运算数，直接返回
   }
 
   let percentageResult = 0;
@@ -188,7 +187,7 @@ function calculatePercentage() {
     display.value = percentageResult; // 显示结果
   } else {
     if (operator === "×" || operator === "÷") {
-      showErrorMessage("Error: percentage is not supported for × and ÷"); // 显示错误
+      showErrorMessage("Error: percentage is not supported for × and ÷");
       return; // 如果操作符是“×”或者“÷”，直接返回
     }
 
@@ -206,7 +205,7 @@ function calculatePercentage() {
 
   firstNumber = percentageResult.toString(); // 更新第一个运算数（结果）
   secondNumber = ""; // 重置
-  operator = ""; // 重置
+  operator = "";
   display.value = percentageResult.toString();
 
   // 处理小数点按钮
